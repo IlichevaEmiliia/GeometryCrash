@@ -1,6 +1,6 @@
 from gc_classes import *
 
-def start_level(event, flag, shop):
+def start_level(event, flag, shop): #запуск выбранного уровня от нажатия кнопки мыши
     if event.type == pygame.MOUSEBUTTONDOWN and flag and not shop.active:
         if 450 <= event.pos[0] <= 645 and 250 <= event.pos[1] <= 455:
             level = 1
@@ -23,7 +23,7 @@ def start_level(event, flag, shop):
     return False
 
 
-def count_percent(level_x, tiles_group, player, percent):
+def count_percent(level_x, tiles_group, player, percent): #подсчет процентов от прохождения уровня
     koeff = (level_x + 1) / 100
     for i in tiles_group:
         if i.rect:
@@ -58,19 +58,19 @@ def jump(camera, jumping, fps_c, player, stage):
             camera.apply(sprite)
 
 
-def terminate():
+def terminate(): #завершение работы программы
     pygame.quit()
     sys.exit()
 
 
-def load_level(filename):
+def load_level(filename): #загрузка карты уровня из файла
     with open(filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
     max_width = max(map(len, level_map))
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-def generate_level(level, player_image, num=1):
+def generate_level(level, player_image, num=1): 
     new_player, x, y = None, None, None
     if num == 1:
         for y in range(len(level)):
