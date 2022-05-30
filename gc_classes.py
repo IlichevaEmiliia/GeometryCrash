@@ -22,7 +22,7 @@ groups = [tiles_group, wall_group, end_group, start_group, spike_group, blade_gr
           portal2_group]
 
 
-def load_image(name, colorkey=None):
+def load_image(name, colorkey=None): #загрузка изображений
     fullname = os.path.join('gc_data', name)
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
@@ -38,7 +38,7 @@ def load_image(name, colorkey=None):
     return image.convert_alpha()
 
 
-class AnimatedSprite(pygame.sprite.Sprite):
+class AnimatedSprite(pygame.sprite.Sprite): #класс позволяет создать анимированный спрайт
     def __init__(self, sheet, columns, rows, x, y, spin):
         super().__init__(all_sprites, death_group)
         self.frames = []
@@ -92,7 +92,7 @@ tile_width = tile_height = tile_size = 50
 player = None
 
 
-class Tile(pygame.sprite.Sprite):
+class Tile(pygame.sprite.Sprite): #класс позволяет создать объекты (препятствия, шипы, пилы, порталы и т.д.)
     def __init__(self, tile_type, pos_x, pos_y):
         if tile_type == 'wall' or tile_type == 'wall2':
             super().__init__(wall_group, all_sprites)
@@ -122,7 +122,7 @@ class Tile(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.image, 90)
 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite): #класс отвечает за игрока, его движение, соприкосновение с другими объектами
     def __init__(self, pos_x, pos_y, player_image):
         super().__init__(player_group, all_sprites)
         self.image = player_image
@@ -148,7 +148,7 @@ class Player(pygame.sprite.Sprite):
         return pygame.sprite.spritecollideany(self, group)
 
 
-class Camera:
+class Camera: #класс сдвигает все объекты относительно игрока
     def __init__(self):
         self.dx = 0
         self.dy = 0
@@ -161,7 +161,7 @@ class Camera:
         self.dy += 1
 
 
-class Shop:
+class Shop: #отвечает за инициализацию товаров магазина и их размещение в нем, отвечает за пополнение и списывание монет из табло
     def __init__(self, name_file):
         self.active = False
         self.name_file = name_file
@@ -218,8 +218,10 @@ class Shop:
                 user.lost_coins += product['price']
                 user.update()
 
-
-class User:
+#отвечает за занесение новых пользователей  в таблицу users базы данных GeometryCrash,
+#за сохранение прогресса (процентов уровней и купленных в магазине товаров) пользователя, подсчет накопленных монет,
+#смену у игрового персонажа базового скина на купленных в магазине скин
+class User: 
     def __init__(self, username='None'):
         user = db.findUser([username])
         if not user:
