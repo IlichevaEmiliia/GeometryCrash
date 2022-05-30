@@ -33,7 +33,7 @@ def count_percent(level_x, tiles_group, player, percent): #подсчет про
     return percent
 
 
-def renew():
+def renew(): #обнуление всех групп спрайтов
     all_sprites.empty()
     tiles_group.empty()
     wall_group.empty()
@@ -47,7 +47,7 @@ def renew():
     death_group.empty()
 
 
-def jump(camera, jumping, fps_c, player, stage):
+def jump(camera, jumping, fps_c, player, stage): #функция отвечает за прыжки персонажа
     if jumping and fps_c % 3 == 0:
         jump_stages = [-0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25,
                        0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.44]
@@ -70,7 +70,7 @@ def load_level(filename): #загрузка карты уровня из фай�
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-def generate_level(level, player_image, num=1): 
+def generate_level(level, player_image, num=1): #преобразование элементов текстового файла в уровень
     new_player, x, y = None, None, None
     if num == 1:
         for y in range(len(level)):
