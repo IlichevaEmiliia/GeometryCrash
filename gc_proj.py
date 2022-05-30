@@ -14,7 +14,7 @@ level2_passed = False
 level3_passed = False
 
 
-def game_function():
+def game_function(): #функция заключает в себе начало игры и игровой цикл
     global level1_passed, level2_passed, level3_passed
     fon = pygame.transform.scale(load_image('pictures/gc_bg.jpg'), (2200, 600))
     screen.blit(fon, (-115, 0))
