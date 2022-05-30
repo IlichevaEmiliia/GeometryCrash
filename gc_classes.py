@@ -168,7 +168,7 @@ class Shop: #отвечает за инициализацию товаров м�
         self.products = {}
         self.coords = []
 
-    def load(self):
+    def load(self): #получает изображения из таблицы shop базы данных GeometryCrash
         lst = db.findallProducts()
         for product in lst:
             font_text = pygame.font.Font(None, 40)
@@ -180,7 +180,7 @@ class Shop: #отвечает за инициализацию товаров м�
             else:
                 self.products[product[1]] = [{"text": text, "price": int(product[3]), "text_price": text_price, "image": load_image(product[4], -1), 'product': product[2]}]
 
-    def show(self, screen, user):
+    def show(self, screen, user): #размещает на экране товары магазина, статус Купить/Куплено
         x = 750
         y = 220
         for el in self.products.items():
@@ -211,7 +211,7 @@ class Shop: #отвечает за инициализацию товаров м�
             y = 220
 
 
-    def buy(self, product, user):
+    def buy(self, product, user): #считает монеты, накопленные пользователем
         if not db.findUserProduct([user.username, product['product']]):
             if int(user.get_coin()) > product['price']:
                 db.insertUserProduct([user.username, product['product'], 1])
@@ -233,13 +233,13 @@ class User:
         self.lvl3_percentage = user[0][4]
         self.lost_coins = user[0][5]
 
-    def update(self):
+    def update(self): #обновляет информацию о прогрессе пользователя
         db.updateUser([self.lvl1_percentage, self.lvl2_percentage, self.lvl3_percentage, self.lost_coins, self.username])
 
-    def get_coin(self):
+    def get_coin(self): #считает монеты, накопленные пользователем
         return str(self.lvl1_percentage + self.lvl2_percentage + self.lvl3_percentage - self.lost_coins)
 
-    def load_image(self, level, prod):
+    def load_image(self, level, prod): #заменяет у игрового персонажа базовый скин уровня на только что купленный (в момент его покупки)
         products = db.findallUserProducts([self.username])
         if level == 2 or level == 3:
             self.player_image = load_image('pictures/gc_icon2.png', 1)
@@ -254,5 +254,5 @@ class User:
                     if el[2] == 'Fast-rocket':
                         self.player_image = prod['lvl2'][0]['image']
 
-    def get_image(self):
+    def get_image(self): #выводит на игровой уровень новый купленный скин
         return self.player_image
